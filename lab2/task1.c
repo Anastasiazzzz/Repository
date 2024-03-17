@@ -1,3 +1,5 @@
+//Написать программу, которая генерирует массив из псевдослучайных целых чисел и выводит его в консоль.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -20,4 +22,5 @@ void main() {
     }
     
     print_mass(mass, size);
+    printf("\n\n");
 }

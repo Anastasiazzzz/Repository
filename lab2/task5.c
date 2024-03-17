@@ -4,11 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-int n = 10;
 
 // структура для хранения данных о товарах
 struct List { 
-    char name[n];
+    char name[10];
     float price;
 };
 
@@ -35,18 +34,19 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    int n = 10;
     struct List products[n];
 
     // считать данные из файла
     for (int i = 0; i < n; i++) {
-        fscanf(input, "%s%f", products[i].name, &products[i].price);
+        fscanf(inputFile, "%s%f", products[i].name, &products[i].price);
     }
 
     insertionSort(products, n);
 
     // запись отсортированных данных в файл
     for (int i = 0; i < n; i++) {
-        fprintf(output, "%s %.2f\n", products[i].name, products[i].price);
+        fprintf(outputFile, "%s %.2f\n", products[i].name, products[i].price);
     }
 
     fclose(inputFile);

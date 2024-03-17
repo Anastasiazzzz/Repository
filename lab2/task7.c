@@ -45,8 +45,10 @@ int evaluate(char expr[])
         }
         else {
             int num2 = pop();
+            
             int num1 = pop();
 
+            printf("%c", expr[i]);
             switch (expr[i]) {
                 case '+':
                     value = num1 + num2;
