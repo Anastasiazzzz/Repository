@@ -1,0 +1,58 @@
+%{
+#include <stdio.h>
+#include <string.h>
+#include "task2.tab.h"
+%}
+
+%%
+
+[0-9]+      yylval=atoi(yytext); return NUMBER; // перевод из строки в число и перезапись
+"+"         return ADD; // addition, тип токена
+"-"         return SUB; // subtration
+\n          return EOL; // пропуск конца строки
+[ \t]+ ;                // пропуск пробелов
+
+%%
+
+
+%{
+#include <stdio.h>
+#include <string.h>
+#include "task2.tab.h"
+
+void yyerror(const char *str)
+{
+    fprint(stderr, "Ошибка %s\n", str); // вывод сообщения об ошибке при её обнаружении
+}
+
+int yywrap()
+{
+    return 1; // достигнут конец файла
+}
+
+main(int argc, char **argv)
+{
+    yyparse(); // запуск
+    return 0;
+}
+
+%}
+
+// определение используемых токенов
+%token NUMBER
+%token ADD SUB
+%token EOL
+
+%%
+
+calclist: /* nothing */ // пустой вход, программа завершится
+| calclist exp EOL { printf("= %d\n, $2"); }
+
+exp: factor
+    | exp ADD factor { $$ = $1 + $3; }
+    | exp SUB factor { $$ = $1 - $3; }
+
+term: NUMBER
+     ABS term {$$ = $2 >= 0? $2 : - $2; }
+
+%%
